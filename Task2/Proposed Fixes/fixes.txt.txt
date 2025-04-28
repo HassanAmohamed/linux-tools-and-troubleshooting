@@ -1,0 +1,84 @@
+Troubleshooting DNS and Network Issues
+
+1:-For DNS Issues
+
+1. Incorrect /etc/resolv.conf
+Confirm: Check file contents against expected DNS servers.
+
+Command
+
+$ sudo nmcli con mod "ConnectionName" ipv4.dns "192.168.1.1,192.168.1.2"
+$ sudo systemctl restart NetworkManager
+
+2. DNS Server Down
+
+Confirm: ping DNS_IP and dig @DNS_IP example.com
+
+Fix: Restart DNS service or failover to secondary:
+
+Command
+
+$ sudo nmcli con mod "ConnectionName" +ipv4.dns "192.168.1.2"
+$ sudo systemctl restart NetworkManager
+
+3. Missing DNS Record
+
+Confirm: dig internal.example.com shows no answer section
+
+Fix: Add record to DNS server (command depends on DNS server software) (the command depends on your DNS server software).
+
+2:- For Network Issues
+
+1. Firewall Blocking DNS
+Confirm: Check current firewall rules with:
+
+Command
+
+$ sudo ufw status
+$ sudo iptables -L
+$ sudo ufw allow out 53/tcp
+$ sudo ufw allow out 53/udp
+
+2. Network Connectivity
+
+Confirm: traceroute DNS_IP or mtr DNS_IP
+
+Fix: Correct routing tables or network config
+
+3:-For Service Issues
+
+1.Host Firewall Blocking
+
+Confirm: Check if the service is accessible locally:
+
+Command
+ 
+$ curl http://localhost
+
+If this works but the external IP fails, the host firewall may be blocking access.
+
+Fix:
+
+Command
+
+$ sudo ufw allow 80/tcp
+$ sudo ufw allow 443/tcp
+
+2. Service Not Running
+Confirm: Check the status of the web service:
+
+Command
+
+$ sudo systemctl status apache2
+OR
+$ sudo systemctl status nginx
+
+Fix:
+
+Command
+
+$ sudo systemctl start apache2
+$ sudo systemctl enable apache2
+OR
+$ sudo systemctl start nginx
+$ sudo systemctl enable nginx

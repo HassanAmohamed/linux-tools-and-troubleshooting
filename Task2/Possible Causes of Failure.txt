@@ -1,0 +1,34 @@
+Possible Causes of Failure
+
+
+1:-DNS Layer Issues:
+
+1.Incorrect /etc/resolv.conf 
+
+2.DNS server down 
+
+3.Missing DNS record  
+
+4.DNS cache poisoning 
+
+5.Split DNS misconfiguration 
+
+2:-Network Layer Issues:
+
+
+1.Firewall blocking DNS 
+
+2.Network connectivity 
+
+3.VLAN/Network segmentation 
+
+
+3:-Service Layer Issues:
+
+1.Host firewall 
+
+2.Service not running 
+
+3.Load balancer issues 
+
+4.SSL/TLS issues 
